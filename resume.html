@@ -2,121 +2,503 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Resume | Kristina</title>
-<link rel="stylesheet" href="style.css">
+
+<!-- FONT AWESOME -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- GOOGLE FONTS (Poppins) -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+    /* --- RESET & VARIABEL (SAMA SEPERTI INDEX & PROFILE) --- */
+    :root {
+        --primary: #6366f1;    /* Ungu Modern */
+        --secondary: #ec4899;  /* Pink Modern */
+        --dark: #1e293b;       /* Warna Teks Gelap */
+        --light-gray: #f1f5f9; /* Background Halaman */
+        --white: #ffffff;
+        --sidebar-width: 280px;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        background-color: var(--light-gray);
+        background-image: linear-gradient(135deg, #e0e7ff 0%, #fce7f3 100%);
+        height: 100vh;
+        overflow: hidden;
+        color: var(--dark);
+    }
+
+    /* --- CONTAINER UTAMA --- */
+    .container {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        max-width: 1600px;
+        margin: 0 auto;
+    }
+
+    /* --- SIDEBAR (SAMA PERSIS) --- */
+    .sidebar {
+        width: var(--sidebar-width);
+        background: var(--white);
+        height: 100%;
+        padding: 40px 30px;
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid rgba(0,0,0,0.05);
+        flex-shrink: 0;
+        z-index: 10;
+    }
+
+    .logo {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 50px;
+        letter-spacing: -0.5px;
+    }
+
+    .logo span {
+        color: var(--primary);
+    }
+
+    .sidebar a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: #64748b;
+        font-weight: 500;
+        font-size: 1rem;
+        padding: 14px 16px;
+        border-radius: 12px;
+        margin-bottom: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .sidebar a i {
+        font-size: 1.2rem;
+        margin-right: 15px;
+        width: 25px;
+        text-align: center;
+    }
+
+    .sidebar a:hover {
+        background-color: #f8fafc;
+        color: var(--primary);
+        transform: translateX(5px);
+    }
+
+    .sidebar a.active {
+        background: linear-gradient(to right, var(--primary), var(--secondary));
+        color: var(--white);
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    }
+
+    .sidebar a.active i {
+        color: var(--white);
+    }
+
+    /* --- MAIN CONTENT --- */
+    .content {
+        flex-grow: 1;
+        padding: 40px 60px;
+        overflow-y: auto;
+        animation: fadeIn 0.8s ease;
+    }
+
+    /* --- LAYOUT GRID RESUME (2 KOLOM) --- */
+    .resume-header {
+        margin-bottom: 40px;
+    }
+
+    .resume-header h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .resume-header p {
+        color: var(--secondary);
+        font-weight: 500;
+        font-size: 1.1rem;
+    }
+
+    .resume-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr; /* Kiri lebih lebar dari kanan */
+        gap: 30px;
+    }
+
+    /* --- CARD STYLE UMUM --- */
+    .resume-card {
+        background: var(--white);
+        padding: 30px;
+        border-radius: 24px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        margin-bottom: 30px;
+    }
+
+    .section-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--dark);
+        border-bottom: 2px solid #f1f5f9;
+        padding-bottom: 10px;
+    }
+
+    .section-title i {
+        color: var(--primary);
+    }
+
+    /* --- TIMELINE (PENDIDIKAN) --- */
+    .timeline-item {
+        position: relative;
+        padding-left: 30px;
+        margin-bottom: 25px;
+        border-left: 3px solid #e2e8f0;
+    }
+
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -8px;
+        top: 5px;
+        width: 13px;
+        height: 13px;
+        background: var(--white);
+        border: 3px solid var(--secondary);
+        border-radius: 50%;
+    }
+
+    .timeline-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .timeline-date {
+        font-size: 0.85rem;
+        color: var(--primary);
+        font-weight: 600;
+        background: #e0e7ff;
+        padding: 4px 10px;
+        border-radius: 6px;
+        display: inline-block;
+        margin-bottom: 8px;
+    }
+
+    .timeline-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--dark);
+    }
+
+    /* --- PENGALAMAN (LIST) --- */
+    .exp-list {
+        list-style: none;
+    }
+
+    .exp-list li {
+        position: relative;
+        padding-left: 25px;
+        margin-bottom: 10px;
+        color: #475569;
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    .exp-list li::before {
+        content: '\f00c'; /* Icon Check */
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        position: absolute;
+        left: 0;
+        color: var(--secondary);
+        font-size: 0.8rem;
+        top: 4px;
+    }
+
+    /* --- SKILL BARS --- */
+    .skill-item {
+        margin-bottom: 20px;
+    }
+
+    .skill-info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        font-weight: 500;
+        font-size: 0.95rem;
+    }
+
+    .progress-bg {
+        width: 100%;
+        height: 10px;
+        background-color: #f1f5f9;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background: linear-gradient(to right, var(--primary), var(--secondary));
+        border-radius: 10px;
+        width: 0%; /* Animasi via JS atau inline style */
+        transition: width 1.5s ease-in-out;
+    }
+
+    /* --- HOBI (TAGS) --- */
+    .hobby-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .tag {
+        background: #f8fafc;
+        color: #475569;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        border: 1px solid #e2e8f0;
+    }
+
+    /* --- FOOTER --- */
+    .copyright {
+        text-align: center;
+        color: #94a3b8;
+        font-size: 0.9rem;
+        margin-top: 20px;
+    }
+
+    /* --- ANIMASI --- */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 900px) {
+        body {
+            overflow: auto;
+            height: auto;
+        }
+        
+        .container {
+            flex-direction: column;
+            height: auto;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 100%;
+            height: auto;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 30px;
+            border-right: none;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+        }
+
+        .logo { margin-bottom: 0; font-size: 1.5rem; }
+        .sidebar a { padding: 8px 12px; font-size: 0.9rem; margin-bottom: 0; }
+        .sidebar a span { display: none; }
+        .sidebar a i { margin-right: 0; font-size: 1.4rem; }
+
+        .content { padding: 30px 20px; }
+
+        .resume-grid {
+            grid-template-columns: 1fr; /* Stack vertikal di HP */
+        }
+    }
+</style>
 </head>
 <body>
 
 <div class="container">
 
-  <!-- SIDEBAR -->
+  <!-- SIDEBAR (SAMA PERSIS) -->
   <aside class="sidebar">
-    <div class="logo">Kristina</div>
-    <a href="index.html">Beranda</a>
-    <a href="profile.html">Profil</a>
-    <a href="resume.html" class="active">Resume</a>
-    <a href="portfolio.html">Portfolio</a>
-    <a href="contact.html">Kontak</a>
+    <div class="logo">Kristina<span>.</span></div>
+
+    <nav>
+      <a href="index.html">
+        <i class="fa-solid fa-house"></i>
+        <span>Beranda</span>
+      </a>
+
+      <a href="profile.html">
+        <i class="fa-solid fa-user"></i>
+        <span>Profil</span>
+      </a>
+
+      <a href="resume.html" class="active">
+        <i class="fa-solid fa-file-lines"></i>
+        <span>Resume</span>
+      </a>
+
+      <a href="portfolio.html">
+        <i class="fa-solid fa-briefcase"></i>
+        <span>Portfolio</span>
+      </a>
+
+      <a href="contact.html">
+        <i class="fa-solid fa-envelope"></i>
+        <span>Kontak</span>
+      </a>
+    </nav>
   </aside>
 
   <!-- CONTENT -->
   <main class="content">
-    <div class="card">
-
+    
+    <!-- HEADER -->
+    <div class="resume-header">
       <h1>Resume</h1>
-      <p class="subtitle">Pengalaman & Keahlian</p>
+      <p>Pengalaman, Pendidikan & Keahlian</p>
+    </div>
 
-      <!-- PENDIDIKAN -->
-      <div class="resume-section">
-        <h3>Pendidikan</h3>
+    <!-- GRID 2 KOLOM -->
+    <div class="resume-grid">
 
-        <div class="resume-item">
-          <h4>SMK – Rekayasa Perangkat Lunak</h4>
-          <span>2023 – Sekarang</span>
+      <!-- KOLOM KIRI: PENDIDIKAN & PENGALAMAN -->
+      <div class="left-col">
+        
+        <!-- PENDIDIKAN -->
+        <div class="resume-card">
+          <div class="section-title">
+            <i class="fa-solid fa-graduation-cap"></i> Pendidikan
+          </div>
+
+          <div class="timeline-item">
+            <span class="timeline-date">2023 – Sekarang</span>
+            <div class="timeline-title">SMK YPC Tasikmalaya – RPL</div>
+            <p style="font-size:0.9rem; color:#64748b; margin-top:5px;">Rekayasa Perangkat Lunak</p>
+          </div>
+
+          <div class="timeline-item">
+            <span class="timeline-date">2019 – 2022</span>
+            <div class="timeline-title">SMP Negeri 1 Puspahiang</div>
+          </div>
         </div>
 
-        <div class="resume-item">
-          <h4>SMP Negeri 1 Puspahiang</h4>
-          <span>2019 – 2022</span>
+        <!-- PENGALAMAN -->
+        <div class="resume-card">
+          <div class="section-title">
+            <i class="fa-solid fa-briefcase"></i> Pengalaman Proyek
+          </div>
+
+          <div style="margin-bottom: 15px;">
+            <h4 style="font-size:1.1rem; margin-bottom:10px;">Proyek Pembelajaran Sekolah</h4>
+            <ul class="exp-list">
+              <li>Membuat aplikasi dan website sederhana sebagai proyek jurusan RPL.</li>
+              <li>Mengembangkan fitur CRUD (Create, Read, Update, Delete) pada aplikasi berbasis web.</li>
+              <li>Mendesain UI/UX menggunakan HTML dan CSS agar responsif dan rapi.</li>
+              <li>Mengimplementasikan logika backend menggunakan PHP dan Laravel.</li>
+              <li>Mengelola database menggunakan SQL dan MySQL.</li>
+            </ul>
+          </div>
         </div>
 
-        <div class="resume-item">
-          <h4>SD Negeri Lengkongsari</h4>
-          <span>2013 – 2019</span>
-        </div>
       </div>
 
-      <!-- PENGALAMAN -->
-      <div class="resume-section">
-        <h3>Pengalaman</h3>
+      <!-- KOLOM KANAN: SKILL & INFO -->
+      <div class="right-col">
 
-        <div class="resume-item">
-          <h4>Praktik Kerja Lapangan (PKL)</h4>
-          <span>PT Inovindo Digital Media • 2025</span>
-          <p>Membantu pengembangan website dan sistem sederhana berbasis web.</p>
+        <!-- KEAHLIAN -->
+        <div class="resume-card">
+          <div class="section-title">
+            <i class="fa-solid fa-code"></i> Keahlian Teknis
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-info">
+              <span>HTML / CSS</span>
+              <span>70%</span>
+            </div>
+            <div class="progress-bg"><div class="progress-bar" style="width: 70%"></div></div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-info">
+              <span>JavaScript Dasar</span>
+              <span>50%</span>
+            </div>
+            <div class="progress-bg"><div class="progress-bar" style="width: 50%"></div></div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-info">
+              <span>PHP & Laravel</span>
+              <span>50%</span>
+            </div>
+            <div class="progress-bg"><div class="progress-bar" style="width: 50%"></div></div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-info">
+              <span>MySQL</span>
+              <span>60%</span>
+            </div>
+            <div class="progress-bg"><div class="progress-bar" style="width: 60%"></div></div>
+          </div>
         </div>
 
-        <div class="resume-item">
-          <h4>Proyek Sekolah</h4>
-          <p>
-            Membuat website iuran warga, CRUD sederhana,
-            dan website profil sekolah.
-          </p>
+        <!-- BAHASA -->
+        <div class="resume-card">
+          <div class="section-title">
+            <i class="fa-solid fa-language"></i> Bahasa
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-info">
+              <span>Indonesia (Native)</span>
+              <span>100%</span>
+            </div>
+            <div class="progress-bg"><div class="progress-bar" style="width: 100%; background: var(--primary);"></div></div>
+          </div>
+
+          <div class="skill-item">
+            <div class="skill-info">
+              <span>Inggris</span>
+              <span>50%</span>
+            </div>
+            <div class="progress-bg"><div class="progress-bar" style="width: 50%; background: var(--primary);"></div></div>
+          </div>
         </div>
+
+        <!-- HOBI -->
+        <div class="resume-card">
+          <div class="section-title">
+            <i class="fa-solid fa-heart"></i> Hobi
+          </div>
+          <div class="hobby-tags">
+            <span class="tag">Membaca Buku</span>
+            <span class="tag">Menggambar</span>
+            <span class="tag">Menulis</span>
+          </div>
+        </div>
+
       </div>
-
-      <!-- BAHASA -->
-      <div class="resume-section">
-        <h3>Bahasa</h3>
-
-        <div class="skill">
-          <span>Indonesia</span>
-          <div class="bar"><div style="width:100%"></div></div>
-        </div>
-
-     
-        <div class="skill">
-          <span>Inggris</span>
-          <div class="bar"><div style="width:50%"></div></div>
-        </div>
-      </div>
-
-      <!-- KEAHLIAN -->
-      <div class="resume-section">
-        <h3>Keahlian</h3>
-
-        <div class="skill">
-          <span>HTML / CSS</span>
-          <div class="bar"><div style="width:75%"></div></div>
-        </div>
-
-        <div class="skill">
-          <span>JavaScript Dasar</span>
-          <div class="bar"><div style="width:50%"></div></div>
-        </div>
-
-        <div class="skill">
-          <span>PHP & Laravel Dasar</span>
-          <div class="bar"><div style="width:50%"></div></div>
-        </div>
-      </div>
-        <div class="skill">
-    <span>MySQL</span>
-    <div class="bar"><div style="width:60%"></div></div>
-  </div>
-
-
-      <!-- HOBI -->
-      <div class="resume-section">
-        <h3>Hobi</h3>
-        <p>Membaca buku,menggambar dan menulis
-        </p>
-      </div>
-
-      <hr style="margin:30px 0;">
-      <p style="text-align:center;">© 2025 Kristina</p>
 
     </div>
+
+    <p class="copyright">© 2025 Kristina. All Rights Reserved.</p>
+
   </main>
 
 </div>

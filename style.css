@@ -390,3 +390,14 @@ body {
   background: #b19cd9;
   border-radius: 10px;
 }
+.sidebar a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sidebar i {
+  font-size: 18px;
+  width: 22px;
+  text-align: center;
+}

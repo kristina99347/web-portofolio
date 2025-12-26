@@ -1,93 +1,372 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Kontak | Kristina</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kontak | Kristina</title>
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css">
+<!-- FONT AWESOME -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-  <!-- FONT AWESOME (WAJIB biar icon muncul) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<!-- GOOGLE FONTS (Poppins) -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+    /* --- RESET & VARIABEL (SAMA SEPERTI HALAMAN LAIN) --- */
+    :root {
+        --primary: #6366f1;    /* Ungu Modern */
+        --secondary: #ec4899;  /* Pink Modern */
+        --dark: #1e293b;       /* Warna Teks Gelap */
+        --light-gray: #f1f5f9; /* Background Halaman */
+        --white: #ffffff;
+        --sidebar-width: 280px;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        background-color: var(--light-gray);
+        background-image: linear-gradient(135deg, #e0e7ff 0%, #fce7f3 100%);
+        height: 100vh;
+        overflow: hidden;
+        color: var(--dark);
+    }
+
+    /* --- CONTAINER UTAMA --- */
+    .container {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        max-width: 1600px;
+        margin: 0 auto;
+    }
+
+    /* --- SIDEBAR (SAMA PERSIS) --- */
+    .sidebar {
+        width: var(--sidebar-width);
+        background: var(--white);
+        height: 100%;
+        padding: 40px 30px;
+        display: flex;
+        flex-direction: column;
+        border-right: 1px solid rgba(0,0,0,0.05);
+        flex-shrink: 0;
+        z-index: 10;
+    }
+
+    .logo {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 50px;
+        letter-spacing: -0.5px;
+    }
+
+    .logo span {
+        color: var(--primary);
+    }
+
+    .sidebar a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: #64748b;
+        font-weight: 500;
+        font-size: 1rem;
+        padding: 14px 16px;
+        border-radius: 12px;
+        margin-bottom: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .sidebar a i {
+        font-size: 1.2rem;
+        margin-right: 15px;
+        width: 25px;
+        text-align: center;
+    }
+
+    .sidebar a:hover {
+        background-color: #f8fafc;
+        color: var(--primary);
+        transform: translateX(5px);
+    }
+
+    .sidebar a.active {
+        background: linear-gradient(to right, var(--primary), var(--secondary));
+        color: var(--white);
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    }
+
+    .sidebar a.active i {
+        color: var(--white);
+    }
+
+    /* --- MAIN CONTENT --- */
+    .content {
+        flex-grow: 1;
+        padding: 40px 60px;
+        overflow-y: auto;
+        animation: fadeIn 0.8s ease;
+    }
+
+    /* Header */
+    .contact-header {
+        margin-bottom: 40px;
+    }
+
+    .contact-header h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .contact-header p {
+        color: var(--secondary);
+        font-weight: 500;
+        font-size: 1.1rem;
+    }
+
+    /* --- GRID KONTAK --- */
+    .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Kartu otomatis menyesuaikan */
+        gap: 25px;
+        margin-bottom: 40px;
+    }
+
+    /* --- KARTU KONTAK --- */
+    .contact-card {
+        background: var(--white);
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        text-decoration: none;
+        color: var(--dark);
+        transition: all 0.3s ease;
+        border: 1px solid transparent;
+    }
+
+    .contact-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        border-color: #e2e8f0;
+    }
+
+    /* Ikon Berwarna */
+    .icon-box {
+        width: 55px;
+        height: 55px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: white;
+        flex-shrink: 0;
+    }
+
+    /* Warna Spesifik Brand */
+    .wa-icon { background: linear-gradient(135deg, #25D366, #128C7E); }
+    .email-icon { background: linear-gradient(135deg, #EA4335, #FBBC05); }
+    .ig-icon { background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); }
+    .linkedin-icon { background: linear-gradient(135deg, #0077b5, #00a0dc); }
+    .loc-icon { background: linear-gradient(135deg, #ef4444, #b91c1c); }
+
+    .card-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-info h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+
+    .card-info small {
+        font-size: 0.85rem;
+        color: #64748b;
+        line-height: 1.4;
+    }
+
+    /* Alamat khusus (bukan link, tapi tampilannya sama) */
+    .contact-div {
+        /* Styling sama dengan contact-card tapi tanpa efek hover link */
+    }
+
+    /* --- FOOTER --- */
+    .copyright {
+        text-align: center;
+        color: #94a3b8;
+        font-size: 0.9rem;
+        margin-top: 20px;
+    }
+
+    /* --- ANIMASI --- */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 900px) {
+        body {
+            overflow: auto;
+            height: auto;
+        }
+        
+        .container {
+            flex-direction: column;
+            height: auto;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 100%;
+            height: auto;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 30px;
+            border-right: none;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+        }
+
+        .logo { margin-bottom: 0; font-size: 1.5rem; }
+        .sidebar a { padding: 8px 12px; font-size: 0.9rem; margin-bottom: 0; }
+        .sidebar a span { display: none; }
+        .sidebar a i { margin-right: 0; font-size: 1.4rem; }
+
+        .content { padding: 30px 20px; }
+        
+        .contact-grid {
+            grid-template-columns: 1fr; /* Stack vertikal di HP */
+        }
+    }
+</style>
 </head>
 <body>
 
 <div class="container">
 
-  <!-- SIDEBAR -->
+  <!-- SIDEBAR (SAMA PERSIS) -->
   <aside class="sidebar">
-    <div class="logo">Kristina</div>
-    <a href="index.html">Beranda</a>
-    <a href="profile.html">Profil</a>
-    <a href="resume.html">Resume</a>
-    <a href="portfolio.html">Portfolio</a>
-    <a href="contact.html" class="active">Kontak</a>
+    <div class="logo">Kristina<span>.</span></div>
+
+    <nav>
+      <a href="index.html">
+        <i class="fa-solid fa-house"></i>
+        <span>Beranda</span>
+      </a>
+
+      <a href="profile.html">
+        <i class="fa-solid fa-user"></i>
+        <span>Profil</span>
+      </a>
+
+      <a href="resume.html">
+        <i class="fa-solid fa-file-lines"></i>
+        <span>Resume</span>
+      </a>
+
+      <a href="portfolio.html">
+        <i class="fa-solid fa-briefcase"></i>
+        <span>Portfolio</span>
+      </a>
+
+      <a href="contact.html" class="active">
+        <i class="fa-solid fa-envelope"></i>
+        <span>Kontak</span>
+      </a>
+    </nav>
   </aside>
 
   <!-- CONTENT -->
   <main class="content">
-    <div class="card">
+    
+    <!-- HEADER -->
+    <div class="contact-header">
+      <h1>Hubungi Saya</h1>
+      <p>Mari terhubung dan berdiskusi</p>
+    </div>
 
-      <h1>Kontak</h1>
-      <p><strong>Hubungi Saya</strong></p>
+    <!-- GRID KARTU KONTAK -->
+    <div class="contact-grid">
 
-      <div class="contact-list">
-
-        <!-- WHATSAPP -->
-        <a href="https://wa.me/6283857332252" target="_blank">
+      <!-- WHATSAPP -->
+      <a href="https://wa.me/6283857332252" target="_blank" class="contact-card">
+        <div class="icon-box wa-icon">
           <i class="fab fa-whatsapp"></i>
-          <div>
-            <span>WhatsApp</span>
-            <small>+62 8385 7332 252</small>
-          </div>
-        </a>
-
-        <!-- EMAIL (BUKA GMAIL – PALING AMAN) -->
-        <a href="https://mail.google.com/mail/?view=cm&to=k637484o@gmail.com" target="_blank">
-          <i class="fas fa-envelope"></i>
-          <div>
-            <span>Email</span>
-            <small>k637484o@gmail.com</small>
-          </div>
-        </a>
-
-        <!-- INSTAGRAM -->
-        <a href="https://www.instagram.com/willzess?igsh=MXYzdXFhem51emwxMw==" target="_blank">
-          <i class="fab fa-instagram"></i>
-          <div>
-            <span>Instagram</span>
-            <small>@kristinaaa</small>
-          </div>
-        </a>
-
-        <!-- LINKEDIN -->
-        <a href="https://www.linkedin.com" target="_blank">
-          <i class="fab fa-linkedin"></i>
-          <div>
-            <span>LinkedIn</span>
-            <small>Kristina</small>
-          </div>
-        </a>
-
-        <!-- ALAMAT (TIDAK DIKLIK) -->
-        <div class="alamat">
-          <i class="fas fa-location-dot"></i>
-          <div>
-            <span>Alamat</span>
-            <small>
-              Puspasari RT 003 RW 001<br>
-              Puspahiang<br>
-              Tasikmalaya, Jawa Barat 45471
-            </small>
-          </div>
         </div>
+        <div class="card-info">
+          <h4>WhatsApp</h4>
+          <small>+62 8385 7332 252</small>
+        </div>
+      </a>
 
+      <!-- EMAIL -->
+      <a href="https://mail.google.com/mail/?view=cm&to=k637484o@gmail.com" target="_blank" class="contact-card">
+        <div class="icon-box email-icon">
+          <i class="fas fa-envelope"></i>
+        </div>
+        <div class="card-info">
+          <h4>Email</h4>
+          <small>k637484o@gmail.com</small>
+        </div>
+      </a>
+
+      <!-- INSTAGRAM -->
+      <a href="https://www.instagram.com/willzess" target="_blank" class="contact-card">
+        <div class="icon-box ig-icon">
+          <i class="fab fa-instagram"></i>
+        </div>
+        <div class="card-info">
+          <h4>Instagram</h4>
+          <small>@kristinaaa</small>
+        </div>
+      </a>
+
+      <!-- LINKEDIN -->
+      <a href="https://www.linkedin.com/in/kristina-4730463a3/" target="_blank" class="contact-card">
+        <div class="icon-box linkedin-icon">
+          <i class="fab fa-linkedin-in"></i>
+        </div>
+        <div class="card-info">
+          <h4>LinkedIn</h4>
+          <small>Kristina</small>
+        </div>
+      </a>
+
+      <!-- ALAMAT (DIV, BUKAN LINK) -->
+      <div class="contact-card contact-div" style="cursor: default;">
+        <div class="icon-box loc-icon">
+          <i class="fas fa-location-dot"></i>
+        </div>
+        <div class="card-info">
+          <h4>Alamat</h4>
+          <small>
+            Puspasari RT 003 RW 001<br>
+            Puspahiang, Tasikmalaya<br>
+            Jawa Barat 45471
+          </small>
+        </div>
       </div>
 
-      <hr style="margin:30px 0;">
-      <p style="text-align:center;">© 2025 Kristina</p>
-
     </div>
+
+    <p class="copyright">© 2025 Kristina. All Rights Reserved.</p>
+
   </main>
 
 </div>
